@@ -1,0 +1,437 @@
+openapi: '3.0.2'
+info:
+  description: >-
+    This is a REST API service for cars manage. It is written on PHP framework
+    Laravel. Database - MySQL
+  version: 1.0.0
+  title: Car manager REST API
+
+paths:
+  /car/all:
+    get:
+      summary: Get all cars in database
+      tags:
+        - Cars
+      description: "Return all cars in database"
+      responses:
+        '200':
+          description: "List of all cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+  
+  /car/available:
+    get:
+      summary: Get unemployed cars
+      tags:
+        - Cars
+      description: "Return all unemployed cars in database"
+      responses:
+        '200':
+          description: "List of all cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+  /car/find:
+    get:
+      summary: Get cars by parameters
+      tags:
+        - Cars
+      description: "Return cars founded by parameters"
+      parameters:
+        - in: query
+          name: id 
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: title
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: employed
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: "List of all cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+  /car/{id}:
+    get:
+      summary: Get car by id
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: "Car with {id}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+  /car/add:
+    put:
+      summary: Add new car to database
+      tags:
+        - Cars
+      parameters:
+        - in: query
+          name: title 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: "If car is added, server return it"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+  /car/{id}/update-info:
+    post:
+      summary: Update info about car
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+        - in: query
+          name: title
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "If car is updated, server return updated car"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+  /car/{id}/delete:
+    delete:
+      summary: Delete a car from database
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: "If car is apdated, server return updated car"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: Audi R8
+                  status:
+                    type: string
+                    example: DELETED
+                    
+                    
+                    
+  /user/all:
+    get:
+      summary: Get all users in database
+      tags:
+        - Users
+      description: "Return all users in database"
+      responses:
+        '200':
+          description: "List of all users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  
+  /user/drivers:
+    get:
+      summary: Get all user with cars
+      tags:
+        - Users
+      description: "Return all users with cars"
+      responses:
+        '200':
+          description: "List of all users with cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /car/nondrivers:
+    get:
+      summary: Get all users without cars
+      tags:
+        - Users
+      description: "Return all users without cars"
+      responses:
+        '200':
+          description: "List of users without cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                  
+  /user/{id}:
+    get:
+      summary: Get user by id
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: "User with {id}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                  
+  /user/add:
+    put:
+      summary: Add new user to database
+      tags:
+        - Users
+      parameters:
+        - in: query
+          name: name 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+        - in: query
+          name: surname 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: "If user is added, server return it"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                  
+  /user/{id}/update-info:
+    post:
+      summary: Update info about user
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: surname
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "If user is updated, server return updated user"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  
+  /user/set-car-to-user:
+    post:
+      summary: Update info about user
+      tags:
+        - Users
+      parameters:
+        - in: query
+          name: user_id 
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: car_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Return user's name and surname with car"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                    example: "Ivan Ivanov"
+                  car_id:
+                    type: string
+                    example: "Audi R8"
+                    
+  /user/release-user:
+    post:
+      summary: Release user from car
+      tags:
+        - Users
+      parameters:
+        - in: query
+          name: user_id 
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: "Return user's name and surname and uneployed car_id"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                    example: "Ivan Ivanov"
+                  car_id:
+                    type: integer
+                    example: 3
+  
+  /user/{id}/delete:
+    delete:
+      summary: Delete a car from database
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id 
+          required: true
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: "If car is apdated, server return updated car"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Ivan
+                  surname:
+                    type: string
+                    example: Ivanov
+                  status:
+                    type: string
+                    example: DELETED
+
+
+components:
+  schemas:
+    Car:
+      properties:
+        id:
+          type: integer
+          example: "1"
+        title:
+          type: string
+          example: "Audi R8"
+        employed:
+          type: boolean
+        created_at:
+          type: string
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          example: "2019-05-17"
+        updated_at:
+          type: string
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          example: "2019-05-17"
+          
+    User:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        car_id:
+          type: integer
+        created_at:
+          type: string
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          example: "2019-05-17"
+        updated_at:
+          type: string
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          example: "2019-05-17"
